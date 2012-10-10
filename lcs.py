@@ -1,5 +1,5 @@
-def getLCSMatrix(first, second):
-    """Generates and returns the LCS matrix."""
+def dynamicGenerateMatrix(first, second):
+    """Generates and returns the LCS matrix for the dynamic programming solution."""
 
     # populate the initial matrix
     lcs_matrix = [[None for j in range(len(first) + 1)] for i in range(len(second) + 1)]
@@ -27,10 +27,12 @@ def getLCSMatrix(first, second):
     return lcs_matrix
 
 
-def getLCSFromMatrix(matrix):
-    pass
+def dynamicGetLCS(first, second):
+    """
+    This function will return the longest common subsequence of two strings,
+    using dynamic programming by generating a matrix.
 
-
-s = 'ACBCAB'
-t = 'BBCACBA'
-result_matrix = getLCSMatrix(s, t)
+    TODO: Function currently returns the matrix. Use the matrix to get the LCS.
+    """
+    result_matrix = dynamicGenerateMatrix(first, second)
+    return result_matrix
