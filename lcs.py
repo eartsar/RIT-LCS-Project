@@ -61,17 +61,34 @@ def algorithmB(first, second):
     return k[1]
 
 
-def algorithmc(first, second):
+def algorithmC(first, second):
     m = len(first)
     n = len(second)
-    C = ""
+
     # if problem is trivial, solve it
     if n == 0:
-        return C
+        return ""
+
+    # if the first is a single character, and it exists in the second, return it
+    elif m == 1:
+        if first in second:
+            return first
+        else:
+            return ""
+
+    # otherwise, split the problem
     else:
         i = m // 2
-    pass
-
-
-def algorithmb(first, second):
-    pass
+        l1 = algorithmB(first[0:i], second)
+        l2 = algorithmB(first[i:][::-1], second[::-1])
+        r = -1
+        jmin = 0
+        for j in range(n):
+            if l1[j] + l2[n - j] > r:
+                r = l1[j] + l2[n - j]
+                jmin = j
+        k = jmin
+        # solving simpler problems
+        c1 = algorithmC(first[:i], second[:k])
+        c2 = algorithmC(first[i:], second[k:])
+        return c1 + c2
