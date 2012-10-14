@@ -1,4 +1,8 @@
 def naiveGetLCS(first, second):
+    """
+    This function will return the longest common subsequence between two
+    strings using a naive recursive approach with no performance boosts.
+    """
     if len(first) == 0 or len(second) == 0:
         return ''
     elif first[-1:] == second[-1:]:
@@ -10,6 +14,53 @@ def naiveGetLCS(first, second):
             return c1
         else:
             return c2
+
+
+def memoizedGetLCS(first, second):
+    """
+    This function will return the longest common subsequence between two
+    strings using the standard recursive approach with memoization. The
+    python dictionary, d, is passed around, holding the results of any
+    sub-problem. If d does not contain the subproblem, it gets computed
+    and then stored.
+
+    d uses a tuple of (string, string) as a key, and has a string (LCS)
+    value.
+    """
+    d = {}
+    result, d = _memoizedGetLCS(first, second, d)
+    return result
+
+
+def _memoizedGetLCS(first, second, d):
+    """
+    'Inner' recursive function used by memoizedGetLCS()
+    The memoization dictionary 'd' is always passed around and updated,
+    and as such, should always be passed in as a parameter, and returned.
+    The dictionary should never be re-initialized.
+    """
+    if len(first) == 0 or len(second) == 0:
+        return '', d
+    elif first[-1:] == second[-1:]:
+        result, d = _memoizedGetLCS(first[:-1], second[:-1], d)
+        return result + first[-1:], d
+    else:
+        if (first, second[:-1]) in d:
+            c1 = d[(first, second[:-1])]
+        else:
+            c1, d = _memoizedGetLCS(first, second[:-1], d)
+            d[(first, second[:-1])] = c1
+
+        if (first[:-1], second) in d:
+            c2 = d[(first[:-1], second)]
+        else:
+            c2, d = _memoizedGetLCS(first[:-1], second, d)
+            d[(first[:-1], second)] = c2
+
+        if len(c1) >= len(c2):
+            return c1, d
+        else:
+            return c2, d
 
 
 def dynamicGetLCS(first, second):
@@ -117,7 +168,7 @@ def algorithmC(first, second):
     # otherwise, split the problem
     else:
         i = m // 2
-        l1 = algorithmB(first[0:i], second)
+        l1 = algorithmB(first[:i], second)
         l2 = algorithmB(first[i:][::-1], second[::-1])
         r = -1
         jmin = 0
@@ -130,3 +181,26 @@ def algorithmC(first, second):
         c1 = algorithmC(first[:i], second[:k])
         c2 = algorithmC(first[i:], second[k:])
         return c1 + c2
+
+
+def main():
+    """
+    The main function of this python module. It just tests the various
+    functions.
+    """
+
+    first = 'AGCAT'
+    second = 'GAC'
+
+    print 'First sequence: ' + first
+    print 'Second sequence: ' + second
+    print ''
+    print 'Naive: ' + naiveGetLCS(first, second)
+    print 'Memoized: ' + memoizedGetLCS(first, second)
+    print 'Dynamic: ' + dynamicGetLCS(first, second)
+    print 'Hirshberg: ' + hirshbergGetLCS(first, second)
+    return
+
+
+if __name__ == '__main__':
+    main()
