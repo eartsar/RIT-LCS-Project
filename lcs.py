@@ -1,3 +1,17 @@
+def naiveGetLCS(first, second):
+    if len(first) == 0 or len(second) == 0:
+        return ''
+    elif first[-1:] == second[-1:]:
+        return naiveGetLCS(first[:-1], second[:-1]) + first[-1:]
+    else:
+        c1 = naiveGetLCS(first, second[:-1])
+        c2 = naiveGetLCS(first[:-1], second)
+        if len(c1) >= len(c2):
+            return c1
+        else:
+            return c2
+
+
 def dynamicGetLCS(first, second):
     """
     This function will return the longest common subsequence of two strings,
