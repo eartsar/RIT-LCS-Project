@@ -1,5 +1,36 @@
+def dynamicGetLCS(first, second):
+    """
+    This function will return the longest common subsequence of two strings,
+    using dynamic programming by generating a matrix.
+    """
+    result_matrix = dynamicGenerateMatrix(first, second)
+    done = False
+
+    i = len(second)
+    j = len(first)
+    result = ''
+
+    while not done:
+        if i == 0 or j == 0:
+            done = True
+        elif first[j - 1] == second[i - 1]:
+            result = first[j - 1] + result
+            i = i - 1
+            j = j - 1
+        elif result_matrix[i][j] == result_matrix[i][j - 1]:
+            j = j - 1
+        elif result_matrix[i][j] == result_matrix[i - 1][j]:
+            i = i - 1
+
+    return result
+
+
 def dynamicGenerateMatrix(first, second):
-    """Generates and returns the LCS matrix for the dynamic programming solution."""
+    """
+    This function generates and returns the LCS matrix used in the dynamic
+    programming solution. The dimensions of the matrix are len(first) rows
+    and len(second) columns.
+    """
 
     # populate the initial matrix
     lcs_matrix = [[None for j in range(len(first) + 1)] for i in range(len(second) + 1)]
@@ -27,27 +58,16 @@ def dynamicGenerateMatrix(first, second):
     return lcs_matrix
 
 
-def dynamicGetLCS(first, second):
-    """
-    This function will return the longest common subsequence of two strings,
-    using dynamic programming by generating a matrix.
-
-    TODO: Function currently returns the matrix. Use the matrix to get the LCS.
-    """
-    """
-    start at the very end of the dual array
-        if the result_matrix[i][j] == result_matrix[i][j-1]
-            move up and make recursive call
-        if the result_matrix[i][j] == result_matrix[i-1][j]
-            move left and make the recursive call
-        else
-            move diag and concat first[i]
-    """
-    result_matrix = dynamicGenerateMatrix(first, second)
-    return result_matrix
+def hirshbergGetLCS(first, second):
+    return algorithmC(first, second)
 
 
 def algorithmB(first, second):
+    """
+    Algorithm B for Hirshberg's quadratic time linear space solution to LCS.
+    This function will return a single row of the LCS matrix, to be used in
+    Hirshberg's algorithm C.
+    """
     k = [[0] * (len(second) + 1), [0] * (len(second) + 1)]
     for i in range(1, len(first) + 1):
         temp = k[0]
@@ -62,6 +82,10 @@ def algorithmB(first, second):
 
 
 def algorithmC(first, second):
+    """
+    Algorithm C for Hirshberg's quadratic time linear space solution to LCS.
+    This function will return the LCS of two strings.
+    """
     m = len(first)
     n = len(second)
 
