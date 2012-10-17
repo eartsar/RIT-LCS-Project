@@ -1,23 +1,31 @@
+global_rcalls = 0
+
+
+def resetGlobals():
+    global global_rcalls
+    global_rcalls = 0
+
+
 def naiveGetLCS(first, second):
     """
-    This function will find the longest common subsequence between two
+    This function will return the longest common subsequence between two
     strings using a naive recursive approach with no performance boosts.
-
-    Returns: LCS, recursion_depth
     """
+    global global_rcalls
+
     if len(first) == 0 or len(second) == 0:
-        return '', 1
+        return ''
     elif first[-1:] == second[-1:]:
-        sublcs, d = naiveGetLCS(first[:-1], second[:-1])
-        sublcs = sublcs + first[-1:]
-        return sublcs, d + 1
+        global_rcalls += 1
+        return naiveGetLCS(first[:-1], second[:-1]) + first[-1:]
     else:
-        c1, d = naiveGetLCS(first, second[:-1])
-        c2, d = naiveGetLCS(first[:-1], second)
+        c1 = naiveGetLCS(first, second[:-1])
+        c2 = naiveGetLCS(first[:-1], second)
+        global_rcalls += 2
         if len(c1) >= len(c2):
-            return c1, d + 1
+            return c1
         else:
-            return c2, d + 1
+            return c2
 
 
 def memoizedGetLCS(first, second):
