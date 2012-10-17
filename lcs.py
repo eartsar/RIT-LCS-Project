@@ -11,13 +11,19 @@ def naiveGetLCS(first, second):
     This function will return the longest common subsequence between two
     strings using a naive recursive approach with no performance boosts.
     """
+    # global to count recursive calls
     global global_rcalls
 
+    # base case
     if len(first) == 0 or len(second) == 0:
         return ''
+
+    # match case
     elif first[-1:] == second[-1:]:
         global_rcalls += 1
         return naiveGetLCS(first[:-1], second[:-1]) + first[-1:]
+
+    # split case
     else:
         c1 = naiveGetLCS(first, second[:-1])
         c2 = naiveGetLCS(first[:-1], second)
