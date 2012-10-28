@@ -1,7 +1,9 @@
 import random
-import subprocess
 import lcs
 import time
+import cProfile
+import sys
+from cStringIO import StringIO
 
 print 'Finding length n strings to get close to ~10 seconds computation...'
 
@@ -22,8 +24,14 @@ while not done:
     # doesn't return string output, it prints. We'll just capture that
     # printed output by piping the output to this procress, then.
     profile_cmd = 'lcsret = lcs.naiveGetLCS("' + first + '", "' + second + '")'
-    proc = subprocess.Popen(['python', 'subprofile.py', profile_cmd], stdout=subprocess.PIPE)
-    out = proc.communicate()[0]
+    lcsret=''
+    old_stdout = sys.stdout
+    sys.stdout = mystdout = StringIO()
+    cProfile.run(profile_cmd)
+    print '#lcsret: ' + lcsret
+    print '#rcalls: ' + str(lcs.global_rcalls)
+    out = mystdout.getvalue()
+    sys.stdout = old_stdout
     lines = (out.strip()).split('\n')
 
     # This is just some interprocess communication nonsense.
