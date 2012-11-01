@@ -10,7 +10,7 @@ def run(lcsMethod, first, second):
     # doesn't return string output, it prints. We'll just capture that
     # printed output by piping the output to this procress, then.
     profile_cmd = 'lcsret[0] = lcsMethod("' + first + '","' + second + '")'
-    print 'Sanity Check LCS Result: ', lcsMethod(first, second)
+    #print 'Sanity Check LCS Result: ', lcsMethod(first, second)
     lcsret = ['']
     old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
