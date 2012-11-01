@@ -1,5 +1,7 @@
 import profilelcs as profiler
-def run(lcsMethod,verbos=False):
+
+
+def run(lcsMethod, verbos=False):
     done = False
     n = 1
     while not done:
@@ -11,12 +13,11 @@ def run(lcsMethod,verbos=False):
         # this forces the worst case for naive
         first = '0' * n
         second = '1' * n
-        seconds,output = profiler.run(lcsMethod,first,second)
-	if seconds > 10:
+        seconds, output = profiler.run(lcsMethod, first, second)
+    if seconds > 10:
             print output
             done = True
-	else:
+    else:
             if verbos:
                 print 'N(' + str(n) + ')  => ' + str(seconds) + ' CPU seconds'
-            n+=1
-
+            n += 1
