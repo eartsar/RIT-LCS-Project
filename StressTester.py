@@ -17,7 +17,7 @@ def run(lcsMethod, verbose=False):
         first = '0' * n
         second = '1' * n
         seconds, output = profiler.run(lcsMethod, first, second)
-        if seconds > 1:
+        if seconds > 10:
                 print output
                 done = True
         else:
