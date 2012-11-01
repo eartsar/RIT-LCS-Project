@@ -7,6 +7,15 @@ def resetGlobals():
 
 
 def naiveGetLCS(first, second):
+    global global_rcalls
+
+    result = _naiveGetLCS(first, second)
+    print '#lcsret: ' + result
+    print '#rcalls: ' + str(global_rcalls)
+    resetGlobals()
+
+
+def _naiveGetLCS(first, second):
     """
     This function will return the longest common subsequence between two
     strings using a naive recursive approach with no performance boosts.
@@ -21,12 +30,12 @@ def naiveGetLCS(first, second):
     # match case
     elif first[-1:] == second[-1:]:
         global_rcalls += 1
-        return naiveGetLCS(first[:-1], second[:-1]) + first[-1:]
+        return _naiveGetLCS(first[:-1], second[:-1]) + first[-1:]
 
     # split case
     else:
-        c1 = naiveGetLCS(first, second[:-1])
-        c2 = naiveGetLCS(first[:-1], second)
+        c1 = _naiveGetLCS(first, second[:-1])
+        c2 = _naiveGetLCS(first[:-1], second)
         global_rcalls += 2
         if len(c1) >= len(c2):
             return c1
@@ -35,6 +44,15 @@ def naiveGetLCS(first, second):
 
 
 def memoizedGetLCS(first, second):
+    global global_rcalls
+
+    result = _memoizedGetLCS(first, second)
+    print '#lcsret: ' + result
+    print '#rcalls: ' + str(global_rcalls)
+    resetGlobals()
+
+
+def _memoizedGetLCS(first, second):
     """
     This function will return the longest common subsequence between two
     strings using the standard recursive approach with memoization. The
@@ -46,11 +64,11 @@ def memoizedGetLCS(first, second):
     value.
     """
     d = {}
-    result, d = _memoizedGetLCS(first, second, d)
+    result, d = _memoizedGetLCSHelper(first, second, d)
     return result
 
 
-def _memoizedGetLCS(first, second, d):
+def _memoizedGetLCSHelper(first, second, d):
     """
     'Inner' recursive function used by memoizedGetLCS()
     The memoization dictionary 'd' is always passed around and updated,
@@ -60,19 +78,19 @@ def _memoizedGetLCS(first, second, d):
     if len(first) == 0 or len(second) == 0:
         return '', d
     elif first[-1:] == second[-1:]:
-        result, d = _memoizedGetLCS(first[:-1], second[:-1], d)
+        result, d = _memoizedGetLCSHelper(first[:-1], second[:-1], d)
         return result + first[-1:], d
     else:
         if (first, second[:-1]) in d:
             c1 = d[(first, second[:-1])]
         else:
-            c1, d = _memoizedGetLCS(first, second[:-1], d)
+            c1, d = _memoizedGetLCSHelper(first, second[:-1], d)
             d[(first, second[:-1])] = c1
 
         if (first[:-1], second) in d:
             c2 = d[(first[:-1], second)]
         else:
-            c2, d = _memoizedGetLCS(first[:-1], second, d)
+            c2, d = _memoizedGetLCSHelper(first[:-1], second, d)
             d[(first[:-1], second)] = c2
 
         if len(c1) >= len(c2):
@@ -82,6 +100,15 @@ def _memoizedGetLCS(first, second, d):
 
 
 def dynamicGetLCS(first, second):
+    global global_rcalls
+
+    result = _dynamicGetLCS(first, second)
+    print '#lcsret: ' + result
+    print '#rcalls: ' + str(global_rcalls)
+    resetGlobals()
+
+
+def _dynamicGetLCS(first, second):
     """
     This function will return the longest common subsequence of two strings,
     using dynamic programming by generating a matrix.
@@ -142,6 +169,15 @@ def dynamicGenerateMatrix(first, second):
 
 
 def hirshbergGetLCS(first, second):
+    global global_rcalls
+
+    result = _hirshbergGetLCS(first, second)
+    print '#lcsret: ' + result
+    print '#rcalls: ' + str(global_rcalls)
+    resetGlobals()
+
+
+def _hirshbergGetLCS(first, second):
     return algorithmC(first, second)
 
 
@@ -213,10 +249,10 @@ def main():
     print 'First sequence: ' + first
     print 'Second sequence: ' + second
     print ''
-    print 'Naive: ' + naiveGetLCS(first, second)
-    print 'Memoized: ' + memoizedGetLCS(first, second)
-    print 'Dynamic: ' + dynamicGetLCS(first, second)
-    print 'Hirshberg: ' + hirshbergGetLCS(first, second)
+    print 'Naive: ' + _naiveGetLCS(first, second)
+    print 'Memoized: ' + _memoizedGetLCS(first, second)
+    print 'Dynamic: ' + _dynamicGetLCS(first, second)
+    print 'Hirshberg: ' + _hirshbergGetLCS(first, second)
     return
 
 
