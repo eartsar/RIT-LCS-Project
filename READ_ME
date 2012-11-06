@@ -1,0 +1,32 @@
+This program uses a variety of Algorithms and Operations involving the Longest Common Subsequence(LCS) problem.
+
+usage: python mainLCS {nmdq} {s [SL ][v ] | r [maxS1L ][maxS2L ][minS1L ][minS2L] | i S1 S2 | a SL AL}
+
+nmdq are the args indicating the algorithm(s) to run on 
+sria are the operations the program can run
+
+Operations:
+s indicates a stress test to check the max size string that can run in 10 sec. If 
+	-optional parameter SL:  the program only compares two strings of size SL. 
+	-optional parameter v: the program runs in verbose mode
+r indicates to generate two random strings to run on
+	-optional parameter maxS1L: the maximum length of the first string
+	-optional parameter maxS2L: the maximum length of the second string
+	-optional parameter minS1L: the minimum length of the first string
+	-optional parameter minS2L: the minimum length of the second string
+i indicates to run on the input strings S1 and S2
+	-required parameter S1: the first string
+	-required parameter S2: the second string
+a indicates to test avg time to find LCS of random strings of length SL generated from an alphabet of length AL
+	-required parameter SL: the length of the random string strings generated
+	-required parameter AL: the length of the alphabet 
+
+Algorithms:
+n - Naive
+m - Recursive with memoization
+d - Dynamic
+q - Quadratic-time linear-space
+
+Example:
+python mainLCS nd r 10 50
+-running this command will create two random strings from the dictionary ['0','1'] or ['A', 'C', 'G', 'T']. One of max length 10 and other other max length 50. It will then run the Naive and Dynamic LCS algorithms with the generated strings as input. The output will be a breakdown of the time each algorithm took from cprofile, along with the result found by each algorithm.
