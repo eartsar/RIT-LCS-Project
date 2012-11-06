@@ -26,7 +26,7 @@ def run(lcsMethod, verbose=False):
                 if grow_fast:
                     if n == 1:
                         n = 2
-                    elif seconds > 4:
+                    elif seconds > 2:
                         n = int((n * max((1 - seconds / 10), 0.1)) + n)
                     else:
                         n = n * 2

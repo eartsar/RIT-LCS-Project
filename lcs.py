@@ -75,6 +75,8 @@ def _memoizedGetLCSHelper(first, second, d):
     and as such, should always be passed in as a parameter, and returned.
     The dictionary should never be re-initialized.
     """
+    global global_rcalls
+    global_rcalls += 1
     if len(first) == 0 or len(second) == 0:
         return '', d
     elif first[-1:] == second[-1:]:
