@@ -11,11 +11,12 @@ lcsMethods = {'n': (lcs.naiveGetLCS, 'Naive LCS'),\
               'd': (lcs.dynamicGetLCS, 'dynamic LCS'),\
               'q': (lcs.hirshbergGetLCS, 'hirshberg LCS')}
 
-#usage: python mainLCS {nmdq} {s|r|i S1 S2}
+#usage: python mainLCS {nmdq} {s [SL ][v ] | r [maxS1L ][maxS2L ][minS1L ][minS2L] | i S1 S2 | a SL AL}
 #nmdq are the args indicating the algorithm(s) to run on
 #s indicates a stress test to check the max size string that can run in 10 sec
 #r indicates to choose a random string to run on
 #i indicates to run on the input strings S1 and S2
+#a indicates to test avg time to find LCS of random string of length SL generated from an alphabet of length AL
 
 if len(sys.argv) >= 3:
     #Get the list of algorithms to run
@@ -96,4 +97,4 @@ if len(sys.argv) >= 3:
             print 'usage: python mainLCS {nmdq} {s|r|i S1 S2}'
 
 else:
-    print 'usage: python mainLCS {nmdq} {s|r|i S1 S2}'
+    print 'usage: python mainLCS {nmdq} {s [SL ][v ] | r [maxS1L ][maxS2L ][minS1L ][minS2L] | i S1 S2 | a SL AL}'
