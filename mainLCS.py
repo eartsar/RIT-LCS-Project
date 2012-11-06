@@ -25,11 +25,20 @@ if len(sys.argv) >= 3:
     #run the correct function
     if sys.argv[2] == 's':
 	verbose = False
-	if len(sys.argv) >= 4 and sys.argv[3]=='v':
+	fixedLength = -1
+	if len(sys.argv) >= 4 and sys.argv[3] != 'v':
+		fixedLength =int(sys.argv[3])
+        if sys.argv[-1]=='v':
 		verbose =True
         for lcsMethod in algList:
-            print 'Finding length n strings to get close to ~10 seconds computation for algorithm ', lcsMethods[lcsMethod][1]
-            stress.run(lcsMethods[lcsMethod][0],verbose)
+            if fixedLength <= -1:
+                print 'Finding length n strings to get close to ~10 seconds computation for algorithm ', lcsMethods[lcsMethod][1]
+                stress.run(lcsMethods[lcsMethod][0],verbose)
+            else:
+                first = '0' * fixedLength
+                second = '1' * fixedLength
+                print 'Using length',fixedLength,'strings to stress test for algorithm ', lcsMethods[lcsMethod][1]
+                print profiler.run(lcsMethods[lcsMethod][0], first, second)[1]
 
     elif sys.argv[2] == 'r':
 	maxLengthFirst = 20
